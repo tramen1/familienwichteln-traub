@@ -1,18 +1,195 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Familienwichteln Traub</title><link rel="stylesheet" href="/style.css"></head>
-<body><main class="center">
-<div class="gift">🎄</div><p class="eyebrow">WEIHNACHTEN 2026</p>
-<h1>Familienwichteln Traub</h1>
-<p>Sieben Personen, sieben Geschenke – und jede Ziehung bleibt geheim.</p>
-<div class="panel"><h2>So funktioniert’s</h2><ol class="left">
-<li>Die organisierende Person öffnet die Verwaltungsseite.</li>
-<li>Sie führt die Ziehung einmalig durch.</li>
-<li>Jede Person erhält ihren persönlichen Geheimlink.</li>
-<li>Öffne nur deinen eigenen Link, um zu sehen, wen du beschenkst.</li>
-</ol></div>
-<h2>Wer macht mit?</h2><p>Papa Traub · Mama Traub · Ingrid Eberhard · Bruno Traub · Rebecca Traub · Christin Traub · Daniel Traub</p>
-<p class="small">Regeln: Niemand zieht sich selbst. Paare ziehen einander nicht.</p>
-<a class="button" href="/admin">Zur Verwaltung</a>
-</main></body></html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Familienwichteln Traub 2026</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #0f3d2e, #176b4d);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 760px;
+      text-align: center;
+    }
+
+    .gift {
+      font-size: 70px;
+      margin-bottom: 5px;
+    }
+
+    .year {
+      font-size: 15px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d9e8df;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin: 10px 0;
+    }
+
+    .subtitle {
+      font-size: 19px;
+      line-height: 1.6;
+      color: #e5f0ea;
+      margin-bottom: 35px;
+    }
+
+    .card {
+      background: white;
+      color: #222;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+      text-align: left;
+      margin-bottom: 22px;
+    }
+
+    .card h2 {
+      color: #145c43;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .card ol {
+      line-height: 1.9;
+      padding-left: 25px;
+    }
+
+    .participants {
+      line-height: 1.8;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .rules {
+      background: rgba(255,255,255,0.12);
+      border-radius: 15px;
+      padding: 18px;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 25px;
+      background: #f2c14e;
+      color: #17352b;
+      text-decoration: none;
+      padding: 15px 28px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 17px;
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: #ffd466;
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 13px;
+      color: #c9ddd2;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 32px;
+      }
+
+      .gift {
+        font-size: 55px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+
+      body {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <div class="gift">🎁</div>
+
+    <div class="year">
+      Weihnachten 2026
+    </div>
+
+    <h1>Familienwichteln Traub</h1>
+
+    <div class="subtitle">
+      Sieben Personen, sieben Geschenke – und jede Ziehung bleibt geheim.
+    </div>
+
+    <div class="card">
+
+      <h2>🎄 So funktioniert's</h2>
+
+      <ol>
+        <li>Jede Person gibt zwei Weihnachtswünsche ein.</li>
+        <li>Die Wünsche werden sicher gespeichert.</li>
+        <li>Erst wenn alle sieben Personen ihre Wünsche abgegeben haben, kann ausgelost werden.</li>
+        <li>Niemand kann sich selbst ziehen.</li>
+        <li>Paare können sich gegenseitig nicht ziehen.</li>
+        <li>Nach der Auslosung erfährt jede Person nur, wen sie beschenkt.</li>
+        <li>Die Wünsche der gezogenen Person werden angezeigt.</li>
+      </ol>
+
+    </div>
+
+    <div class="card">
+
+      <h2>👨‍👩‍👧‍👦 Wer macht mit?</h2>
+
+      <div class="participants">
+        Grossvater · Grossmutter · Christine · Rebecca · Ingrid · Bruno · Daniel
+      </div>
+
+    </div>
+
+    <div class="rules">
+      🔒 <strong>Geheime Auslosung</strong><br>
+      Niemand sieht die komplette Ziehung.<br>
+      Jeder sieht nur seine eigene Wichtelperson.
+    </div>
+
+    <a class="button" href="#">
+      🎅 Zum Familienwichteln
+    </a>
+
+    <div class="footer">
+      Familienwichteln Traub · Weihnachten 2026
+    </div>
+
+  </main>
+
+</body>
+</html>

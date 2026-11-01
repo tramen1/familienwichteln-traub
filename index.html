@@ -181,10 +181,34 @@
       Jeder sieht nur seine eigene Wichtelperson.
     </div>
 
-    <a class="button" href="#">
+    <a class="button" href="#wichteln">
       🎅 Zum Familienwichteln
     </a>
+<div id="wichteln" class="card" style="margin-top:30px;">
 
+  <h2>🎅 Familienwichteln 2026</h2>
+
+  <p>Wer bist du?</p>
+
+  <select id="participantSelect"
+          style="width:100%; padding:14px; font-size:18px; margin-bottom:20px;">
+    <option value="">Bitte auswählen</option>
+    <option value="1">Grossvater</option>
+    <option value="2">Grossmutter</option>
+    <option value="3">Christine</option>
+    <option value="4">Rebecca</option>
+    <option value="5">Ingrid</option>
+    <option value="6">Bruno</option>
+    <option value="7">Daniel</option>
+  </select>
+
+  <button class="button" type="button" onclick="selectParticipant()">
+    Weiter
+  </button>
+
+  <div id="participantArea" style="margin-top:25px;"></div>
+
+</div>
     <div class="footer">
       Familienwichteln Traub · Weihnachten 2026
     </div>
@@ -198,6 +222,71 @@
   const SUPABASE_KEY = 'sb_publishable_t6Hg2cTl1E_tAxmfLRNudA_-VK6uElB';
 
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  function selectParticipant() {
+  const select = document.getElementById('participantSelect');
+  const area = document.getElementById('participantArea');
+
+  const participantId = select.value;
+  const participantName = select.options[select.selectedIndex].text;
+
+  if (!participantId) {
+    area.innerHTML = '<p>Bitte wähle zuerst deinen Namen aus.</p>';
+    return;
+  }
+
+  area.innerHTML = `
+    <h3>Hallo ${participantName} 👋</h3>
+    <p>Gib deine zwei Weihnachtswünsche ein:</p>
+
+    <input id="wish1"
+           type="text"
+           placeholder="🎁 Weihnachtswunsch 1"
+           style="width:100%; padding:14px; font-size:17px; margin-bottom:12px;">
+
+    <input id="wish2"
+           type="text"
+           placeholder="🎁 Weihnachtswunsch 2"
+           style="width:100%; padding:14px; font-size:17px; margin-bottom:20px;">
+
+    <button class="button"
+            type="button"
+            onclick="submitWishes(${participantId})">
+      Wünsche verbindlich abgeben
+    </button>
+
+    <div id="wishMessage" style="margin-top:20px;"></div>
+  `;
+    }
+async function submitWishes(participantId) {
+
+  const wish1 = document.getElementById('wish1').value.trim();
+  const wish2 = document.getElementById('wish2').value.trim();
+  const message = document.getElementById('wishMessage');
+
+  if (!wish1 || !wish2) {
+    message.innerHTML = '⚠️ Bitte gib beide Weihnachtswünsche ein.';
+    return;
+  }
+
+  message.innerHTML = '⏳ Wünsche werden gespeichert...';
+
+  const { data, error } = await supabaseClient.rpc('submit_wishes', {
+    p_participant_id: participantId,
+    p_wish_1: wish1,
+    p_wish_2: wish2
+  });
+
+  if (error) {
+    console.error(error);
+    message.innerHTML = '❌ Leider ist beim Speichern etwas schiefgelaufen.';
+    return;
+  }
+
+  message.innerHTML = '✅ Deine Wünsche wurden erfolgreich gespeichert! 🎄';
+
+  document.getElementById('wish1').disabled = true;
+  document.getElementById('wish2').disabled = true;
+}
 </script>
 </body>
 </html>

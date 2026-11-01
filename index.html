@@ -222,41 +222,70 @@
   const SUPABASE_KEY = 'sb_publishable_t6Hg2cTl1E_tAxmfLRNudA_-VK6uElB';
 
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  function selectParticipant() {
-  const select = document.getElementById('participantSelect');
-  const area = document.getElementById('participantArea');
+async function selectParticipant() {
+    const select = document.getElementById('participantSelect');
+    const area = document.getElementById('participantArea');
 
-  const participantId = select.value;
-  const participantName = select.options[select.selectedIndex].text;
+    const participantId = select.value;
+    const participantName = select.options[select.selectedIndex].text;
 
-  if (!participantId) {
-    area.innerHTML = '<p>Bitte wähle zuerst deinen Namen aus.</p>';
-    return;
-  }
-
-  area.innerHTML = `
-    <h3>Hallo ${participantName} 👋</h3>
-    <p>Gib deine zwei Weihnachtswünsche ein:</p>
-
-    <input id="wish1"
-           type="text"
-           placeholder="🎁 Weihnachtswunsch 1"
-           style="width:100%; padding:14px; font-size:17px; margin-bottom:12px;">
-
-    <input id="wish2"
-           type="text"
-           placeholder="🎁 Weihnachtswunsch 2"
-           style="width:100%; padding:14px; font-size:17px; margin-bottom:20px;">
-
-    <button class="button"
-            type="button"
-            onclick="submitWishes(${participantId})">
-      Wünsche verbindlich abgeben
-    </button>
-
-    <div id="wishMessage" style="margin-top:20px;"></div>
-  `;
+    if (!participantId) {
+        area.innerHTML = '<p>Bitte wähle zuerst deinen Namen aus.</p>';
+        return;
     }
+
+    // Prüfen, ob diese Person bereits Wünsche abgegeben hat
+    const { data, error } = await supabaseClient
+        .from('wishes')
+        .select('id')
+        .eq('year_id', 1)
+        .eq('participant_id', participantId)
+        .maybeSingle();
+
+    if (error) {
+        console.error(error);
+        area.innerHTML = '<p>❌ Beim Prüfen ist etwas schiefgelaufen.</p>';
+        return;
+    }
+
+    // Wünsche wurden bereits abgegeben
+    if (data) {
+        area.innerHTML = `
+            <h3>Hallo ${participantName} 👋</h3>
+            <p style="font-size:18px;">
+                ✅ Deine Weihnachtswünsche wurden bereits abgegeben.
+            </p>
+            <p>
+                🔒 Sie können nicht mehr geändert werden.
+            </p>
+        `;
+        return;
+    }
+
+    // Noch keine Wünsche vorhanden
+    area.innerHTML = `
+        <h3>Hallo ${participantName} 👋</h3>
+        <p>Gib deine zwei Weihnachtswünsche ein:</p>
+
+        <input id="wish1"
+               type="text"
+               placeholder="🎁 Weihnachtswunsch 1"
+               style="width:100%; padding:14px; font-size:17px; margin-bottom:12px;">
+
+        <input id="wish2"
+               type="text"
+               placeholder="🎁 Weihnachtswunsch 2"
+               style="width:100%; padding:14px; font-size:17px; margin-bottom:20px;">
+
+        <button class="button"
+                type="button"
+                onclick="submitWishes(${participantId})">
+            Wünsche verbindlich abgeben
+        </button>
+
+        <div id="wishMessage" style="margin-top:20px;"></div>
+    `;
+}
 async function submitWishes(participantId) {
 
   const wish1 = document.getElementById('wish1').value.trim();

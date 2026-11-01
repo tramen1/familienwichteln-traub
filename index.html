@@ -285,6 +285,50 @@ async function selectParticipant() {
 
         <div id="wishMessage" style="margin-top:20px;"></div>
     `;
+  }
+async function showAssignment(participantId) {
+    const area = document.getElementById('participantArea');
+
+    const { data, error } = await supabaseClient.rpc('get_assignment', {
+        p_giver_id: participantId
+    });
+
+    if (error) {
+        console.error(error);
+        area.innerHTML += `
+            <p>❌ Die Wichtel-Ziehung konnte leider nicht geladen werden.</p>
+        `;
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        area.innerHTML += `
+            <p>⏳ Für dich wurde noch keine Wichtelperson gefunden.</p>
+        `;
+        return;
+    }
+
+    const assignment = data[0];
+
+    let wishesHtml = '';
+
+    if (assignment.wish_1 && assignment.wish_2) {
+        wishesHtml = `
+            <p><strong>🎄 Weihnachtswünsche:</strong></p>
+            <p>🎁 ${assignment.wish_1}</p>
+            <p>🎁 ${assignment.wish_2}</p>
+        `;
+    } else {
+        wishesHtml = `
+            <p>⏳ Die Weihnachtswünsche wurden noch nicht abgegeben.</p>
+        `;
+    }
+
+    area.innerHTML += `
+        <hr style="margin:30px 0;">
+        <h2>🎁 Du wichtelst: ${assignment.receiver_name}</h2>
+        ${wishesHtml}
+    `;
 }
 async function submitWishes(participantId) {
 
